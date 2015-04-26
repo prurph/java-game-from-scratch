@@ -1,13 +1,27 @@
 package tt.presco.rain;
 
-public class Game implements Runnable {
+import javax.swing.JFrame;
+import java.awt.*;
+
+public class Game extends Canvas implements Runnable {
+    private static final long serialVersionUID = 1L;
 
     public static int width = 300;
     public static int height = width / 16 * 9;
     public static int scale = 3;
 
     private Thread thread;
+    private JFrame frame;
     private boolean running = false;
+
+    public Game() {
+        Dimension size = new Dimension(width * scale, height * scale);
+        // setPreferredSize comes from Game extending Canvas (which extends
+        // Component, where the method is defined).
+        setPreferredSize(size);
+
+        frame = new JFrame();
+    }
 
     public synchronized void start() {
         running = true;
@@ -30,8 +44,25 @@ public class Game implements Runnable {
 
     public void run() {
         while (running) {
-
+            System.out.println("Running...");
         }
+    }
+
+    public static void main(String[] args) {
+        Game game = new Game();
+        // Immediately make false non-resizable to avoid graphical bugs.
+        game.frame.setResizable(false);
+        game.frame.setTitle("Rain");
+        // Since game is subclass of Canvas, it can be added to the frame.
+        game.frame.add(game);
+        // Set frame to desired size to fit the game that was just added.
+        game.frame.pack();
+        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Centers window within the screen.
+        game.frame.setLocationRelativeTo(null);
+        game.frame.setVisible(true);
+
+        game.start();
     }
 
 }

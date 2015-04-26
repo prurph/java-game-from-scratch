@@ -2,6 +2,7 @@
 .idea
 *.iml
 *.iws
+out/
 
 # OSX
 .DS_Store
