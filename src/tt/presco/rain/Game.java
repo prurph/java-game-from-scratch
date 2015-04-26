@@ -7,9 +7,11 @@ public class Game implements Runnable {
     public static int scale = 3;
 
     private Thread thread;
+    private boolean running = false;
 
     public synchronized void start() {
-        // this is the Game class. It must implement Runnable to allow this.
+        running = true;
+        // this is the Game class. It must implement Runnable to allow this ref.
         thread = new Thread(this, "Display");
         thread.start();
     }
@@ -18,10 +20,18 @@ public class Game implements Runnable {
      * Stops the Game by waiting for the thread to die.
      */
     public synchronized void stop() {
+        running = false;
         try {
             thread.join();
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    public void run() {
+        while (running) {
+
+        }
+    }
+
 }
