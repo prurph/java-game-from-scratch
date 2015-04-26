@@ -2,6 +2,7 @@ package tt.presco.rain;
 
 import javax.swing.JFrame;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
@@ -44,7 +45,24 @@ public class Game extends Canvas implements Runnable {
 
     public void run() {
         while (running) {
-            System.out.println("Running...");
+            update();
+            render();
+        }
+    }
+
+    public void update() {
+
+    }
+
+    public void render() {
+        // Retrieve or create the BufferStrategy that extending Canvas provides.
+        BufferStrategy bs = getBufferStrategy();
+        if (bs == null) {
+            // Triple buffering: two back buffers and the front buffer.
+            // Allows calculation of the next frame before the "backup" frame is
+            // displayed.
+            createBufferStrategy(3);
+            return;
         }
     }
 
