@@ -27,6 +27,8 @@ public class Game extends Canvas implements Runnable {
     public synchronized void start() {
         running = true;
         // this is the Game class. It must implement Runnable to allow this ref.
+        // Furthermore, when the thread starts, its target's (this') run method
+        // is called.
         thread = new Thread(this, "Display");
         thread.start();
     }
@@ -64,6 +66,13 @@ public class Game extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
+
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(new Color(255, 99, 71));
+        // Origin is top left corner (in OpenGL origin is bottom left).
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.dispose();
+        bs.show();
     }
 
     public static void main(String[] args) {
