@@ -1,0 +1,14 @@
+package tt.presco.rain.graphics;
+
+public class Screen {
+
+    private int width, height;
+    public int[] pixels;
+
+    public Screen(int width, int height) {
+        this.width = width;
+        this.height = height;
+        // Create array of one integer for each pixel in the screen.
+        pixels = new int[width * height];
+    }
+}

@@ -1,5 +1,7 @@
 package tt.presco.rain;
 
+import tt.presco.rain.graphics.Screen;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -17,6 +19,8 @@ public class Game extends Canvas implements Runnable {
     private JFrame frame;
     private boolean running = false;
 
+    private Screen screen;
+
     private BufferedImage image =
             new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     // Get image, get array of pixels that make it up (raster), then get the
@@ -30,6 +34,8 @@ public class Game extends Canvas implements Runnable {
         // setPreferredSize comes from Game extending Canvas (which extends
         // Component, where the method is defined).
         setPreferredSize(size);
+
+        screen = new Screen(width, height);
 
         frame = new JFrame();
     }
