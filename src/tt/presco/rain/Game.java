@@ -3,6 +3,8 @@ package tt.presco.rain;
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
@@ -14,6 +16,14 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private JFrame frame;
     private boolean running = false;
+
+    private BufferedImage image =
+            new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    // Get image, get array of pixels that make it up (raster), then get the
+    // data buffer for them, and the data it contains. Converts the image data
+    // to an array of integers, allowing us to modify the pixels and create an
+    // image.
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     public Game() {
         Dimension size = new Dimension(width * scale, height * scale);
@@ -40,7 +50,7 @@ public class Game extends Canvas implements Runnable {
         running = false;
         try {
             thread.join();
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
