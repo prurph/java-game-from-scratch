@@ -83,6 +83,7 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
+        screen.clear();
         screen.render();
 
         for (int i = 0; i < pixels.length; i++) {
@@ -91,9 +92,6 @@ public class Game extends Canvas implements Runnable {
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
-        // Origin is top left corner (in OpenGL origin is bottom left).
-        g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
         bs.show();
