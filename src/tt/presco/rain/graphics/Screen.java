@@ -1,16 +1,27 @@
 package tt.presco.rain.graphics;
 
+import java.util.Random;
+
 public class Screen {
 
     private int width, height;
     public int[] pixels;
-    int xtime, ytime, counter = 0;
+
+    // Game board consists of 4096 tiles in a 64 tile x 64 tile square.
+    public int[] tiles = new int[64 * 64];
+
+    private Random random = new Random();
 
     public Screen(int width, int height) {
         this.width = width;
         this.height = height;
         // Create array of one integer for each pixel in the screen.
         pixels = new int[width * height];
+
+        for (int i = 0; i < 64 * 64; i++) {
+            // Randomly generate a color from 0 (black) to white.
+            tiles[i] = random.nextInt(0xffffff);
+        }
     }
 
     // Reset all pixels to black.
@@ -21,15 +32,16 @@ public class Screen {
     }
 
     public void render() {
-        counter++;
-        if (counter % 100 == 0) xtime++;
-        if (counter % 100 == 0) ytime++;
-
         for (int y = 0; y < height; y++) {
-            if (ytime < 0 || ytime >= height) break;
+            if (y < 0 || y >= height) break;
             for (int x = 0; x < width; x++) {
-                if (xtime < 0 || xtime >= width) break;
-                pixels[xtime + ytime * width] = 0xff00ff; // 50400 pixels total
+                if (x < 0 || x >= width) break;
+                // Tiles will be 16px x 16px. Every 16 x pixels results in a new
+                // tile. Every 16 y pixels moves down a "row" (64) of tiles.
+                // Instead of x / 16, shift right 4 places (equivalent to
+                // dividing by 2 four times).
+                int tileIndex = (x >> 4) + (y >> 4) * 64;
+                pixels[x + y * width] = tiles[tileIndex]; // 50400 pixels total.
             }
         }
     }
