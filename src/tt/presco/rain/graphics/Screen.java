@@ -46,7 +46,7 @@ public class Screen {
                 // dividing by 2 four times). Bitwsise & with MAP_SIZE_MASK is
                 // like modding by the number of tiles in a row/column.
                 int tileIndex = ((xx >> 4) & MAP_SIZE_MASK) + ((yy >> 4) & MAP_SIZE_MASK) * MAP_SIZE;
-                pixels[x + y * width] = tiles[tileIndex]; // 50400 pixels total.
+                pixels[x + y * width] = Sprite.grass.pixels[(x & 15) + (y & 15) * Sprite.grass.SIZE]; // 50400 pixels total.
             }
         }
     }
