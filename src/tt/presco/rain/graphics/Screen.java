@@ -34,19 +34,12 @@ public class Screen {
 
     public void render(int xOffset, int yOffset) {
         for (int y = 0; y < height; y++) {
-            int yy = y + yOffset;
-            // if (yy < 0 || yy >= height) break;
+            int yp = y + yOffset;
+            if (yp < 0 || yp >= height) continue;
             for (int x = 0; x < width; x++) {
-                int xx = x + xOffset;
-                // if (xx < 0 || xx >= width) break;
-
-                // Tiles will be 16px x 16px. Every 16 x pixels results in a new
-                // tile. Every 16 y pixels moves down a "row" (64) of tiles.
-                // Instead of x / 16, shift right 4 places (equivalent to
-                // dividing by 2 four times). Bitwsise & with MAP_SIZE_MASK is
-                // like modding by the number of tiles in a row/column.
-                int tileIndex = ((xx >> 4) & MAP_SIZE_MASK) + ((yy >> 4) & MAP_SIZE_MASK) * MAP_SIZE;
-                pixels[x + y * width] = Sprite.grass.pixels[(x & 15) + (y & 15) * Sprite.grass.SIZE]; // 50400 pixels total.
+                int xp = x + xOffset;
+                if (xp < 0 || xp >= width) continue;
+                pixels[xp + yp * width] = Sprite.grass.pixels[(x & 15) + (y & 15) * Sprite.grass.SIZE]; // 50400 pixels total.
             }
         }
     }
